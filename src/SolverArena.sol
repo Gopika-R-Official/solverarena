@@ -18,6 +18,7 @@ contract SolverArena {
     }
 
     mapping(uint256 => Round) public rounds;
+    mapping(address => uint256) public pendingWithdrawals;
 
     event RoundCreated(
         uint256 indexed roundId,
@@ -108,12 +109,24 @@ contract SolverArena {
         }
 
         (bool success, ) = winner.call{value: reward}("");
-        require(success, "payment failed");
+        if (!success) {
+            pendingWithdrawals[winner] += reward;
+        }
 
         emit RoundSettled(
             roundId,
             winner,
             reward
         );
+    }
+
+    function withdraw() external {
+        uint256 amount = pendingWithdrawals[msg.sender];
+        require(amount > 0, "no pending withdrawals");
+        
+        pendingWithdrawals[msg.sender] = 0;
+        
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "withdrawal failed");
     }
 }

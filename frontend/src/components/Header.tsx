@@ -12,9 +12,9 @@ export function Header({ account, connectWallet }: HeaderProps) {
         <div className="flex items-center space-x-8">
           <h1 className="text-xl font-bold tracking-tight">SolverArena</h1>
           <div className="hidden md:flex space-x-6 text-sm font-medium text-textMuted">
-            <span className="text-textMain cursor-pointer">Arena</span>
-            <span className="hover:text-textMain transition-colors cursor-not-allowed">Solvers</span>
-            <span className="hover:text-textMain transition-colors cursor-pointer">How It Works</span>
+            <a href="#arena" className="hover:text-textMain transition-colors">Arena</a>
+            <a href="#solvers" className="hover:text-textMain transition-colors">Solvers</a>
+            <a href="#how-it-works" className="hover:text-textMain transition-colors">How It Works</a>
           </div>
         </div>
         <div className="flex items-center space-x-4">

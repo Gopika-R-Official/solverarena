@@ -1,6 +1,6 @@
 export function HowItWorks() {
   return (
-    <section className="border-t border-surfaceBorder pt-16">
+    <section id="how-it-works" className="border-t border-surfaceBorder pt-16 scroll-mt-24">
       <h3 className="text-2xl font-semibold mb-8 text-center">How It Works</h3>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
         <div className="p-6">

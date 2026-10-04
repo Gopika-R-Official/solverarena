@@ -7,9 +7,11 @@ interface SolutionPanelProps {
   handleSubmitSolution: () => void;
   pendingTx: string;
   account: string;
+  activeRound: any;
 }
 
-export function SolutionPanel({ weights, setWeights, handleSubmitSolution, pendingTx, account }: SolutionPanelProps) {
+export function SolutionPanel({ weights, setWeights, handleSubmitSolution, pendingTx, account, activeRound }: SolutionPanelProps) {
+  const isEnded = activeRound ? (Date.now() / 1000 >= Number(activeRound.deadline)) : false;
   const numWeights = weights.map(w => parseFloat(w || '0'));
   const totalWeight = numWeights.reduce((a, b) => a + b, 0);
   const holdingsCount = numWeights.filter(w => w > 0).length;
@@ -91,11 +93,16 @@ export function SolutionPanel({ weights, setWeights, handleSubmitSolution, pendi
 
       <button 
         onClick={handleSubmitSolution}
-        disabled={!isValid || !account || pendingTx !== ''}
+        disabled={!isValid || !account || pendingTx !== '' || isEnded}
         className="w-full py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accentHover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {pendingTx || 'SUBMIT SOLUTION'}
       </button>
+      {isEnded && (
+        <p className="text-sm text-center text-orange-400">
+          This round has ended. Wait for settlement or create a new round.
+        </p>
+      )}
     </div>
   );
 }
