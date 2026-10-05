@@ -14,13 +14,13 @@ contract PortfolioVerifierTest is Test {
         // Simple test data.
         // Returns are expressed in 1e4 units.
         mu[0] = 1000; // 10%
-        mu[1] = 900;  // 9%
-        mu[2] = 800;  // 8%
-        mu[3] = 700;  // 7%
-        mu[4] = 600;  // 6%
-        mu[5] = 500;  // 5%
-        mu[6] = 400;  // 4%
-        mu[7] = 300;  // 3%
+        mu[1] = 900; // 9%
+        mu[2] = 800; // 8%
+        mu[3] = 700; // 7%
+        mu[4] = 600; // 6%
+        mu[5] = 500; // 5%
+        mu[6] = 400; // 4%
+        mu[7] = 300; // 3%
 
         // Keep covariance simple for the first tests.
         // All values are zero, so risk penalty is zero.
@@ -98,6 +98,7 @@ contract PortfolioVerifierTest is Test {
         vm.expectRevert("too many holdings");
         verifier.score(weights);
     }
+
     function testRiskPenalty() public {
         int256[8] memory testMu;
         int256[8][8] memory testCov;

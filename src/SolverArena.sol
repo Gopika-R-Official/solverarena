@@ -81,7 +81,7 @@ contract SolverArena {
             winner = round.poster;
         }
 
-        (bool success, ) = winner.call{value: reward}("");
+        (bool success,) = winner.call{value: reward}("");
         if (!success) {
             pendingWithdrawals[winner] += reward;
         }
@@ -92,10 +92,10 @@ contract SolverArena {
     function withdraw() external {
         uint256 amount = pendingWithdrawals[msg.sender];
         require(amount > 0, "no pending withdrawals");
-        
+
         pendingWithdrawals[msg.sender] = 0;
-        
-        (bool success, ) = msg.sender.call{value: amount}("");
+
+        (bool success,) = msg.sender.call{value: amount}("");
         require(success, "withdrawal failed");
     }
 }

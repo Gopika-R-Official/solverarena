@@ -35,14 +35,8 @@ contract SolverArenaTest is Test {
 
         uint256 roundId = arena.createRound{value: 1 ether}(1 days);
 
-        (
-            address roundPoster,
-            uint256 reward,
-            uint256 deadline,
-            int256 bestScore,
-            address bestSolver,
-            bool settled
-        ) = arena.rounds(roundId);
+        (address roundPoster, uint256 reward, uint256 deadline, int256 bestScore, address bestSolver, bool settled) =
+            arena.rounds(roundId);
 
         assertEq(roundPoster, poster);
         assertEq(reward, 1 ether);
@@ -72,14 +66,7 @@ contract SolverArenaTest is Test {
         vm.prank(solverA);
         arena.submitSolution(roundId, weights);
 
-        (
-            ,
-            ,
-            ,
-            int256 bestScore,
-            address bestSolver,
-            
-        ) = arena.rounds(roundId);
+        (,,, int256 bestScore, address bestSolver,) = arena.rounds(roundId);
 
         assertEq(bestScore, 250);
         assertEq(bestSolver, solverA);
@@ -121,14 +108,7 @@ contract SolverArenaTest is Test {
         vm.prank(solverB);
         testArena.submitSolution(roundId, solutionB);
 
-        (
-            ,
-            ,
-            ,
-            int256 bestScore,
-            address bestSolver,
-            
-        ) = testArena.rounds(roundId);
+        (,,, int256 bestScore, address bestSolver,) = testArena.rounds(roundId);
 
         assertGt(bestScore, 250);
         assertEq(bestSolver, solverB);
@@ -173,14 +153,7 @@ contract SolverArenaTest is Test {
 
         assertEq(solverA.balance, balanceBefore + 1 ether);
 
-        (
-            ,
-            ,
-            ,
-            ,
-            ,
-            bool settled
-        ) = arena.rounds(roundId);
+        (,,,,, bool settled) = arena.rounds(roundId);
 
         assertTrue(settled);
     }
