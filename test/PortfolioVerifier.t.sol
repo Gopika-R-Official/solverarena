@@ -112,8 +112,7 @@ contract PortfolioVerifierTest is Test {
         testCov[2][2] = 1000;
         testCov[3][3] = 1000;
 
-        PortfolioVerifier testVerifier =
-            new PortfolioVerifier(testMu, testCov);
+        PortfolioVerifier testVerifier = new PortfolioVerifier(testMu, testCov);
 
         uint16[8] memory weights;
 

@@ -14,7 +14,7 @@ contract DeployScript is Script {
         int256[8] memory mu = [int256(100), 200, 300, 400, 150, 250, 350, 450];
         int256[8][8] memory cov;
         // Fill diagonal
-        for(uint i=0; i<8; i++) {
+        for (uint i = 0; i < 8; i++) {
             cov[i][i] = 1000;
         }
 

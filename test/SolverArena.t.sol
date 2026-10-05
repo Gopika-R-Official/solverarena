@@ -95,15 +95,12 @@ contract SolverArenaTest is Test {
         mu[3] = 400;
         mu[4] = 350;
 
-        PortfolioVerifier testVerifier =
-            new PortfolioVerifier(mu, cov);
+        PortfolioVerifier testVerifier = new PortfolioVerifier(mu, cov);
 
-        SolverArena testArena =
-            new SolverArena(testVerifier);
+        SolverArena testArena = new SolverArena(testVerifier);
 
         vm.prank(poster);
-        uint256 roundId =
-            testArena.createRound{value: 1 ether}(1 days);
+        uint256 roundId = testArena.createRound{value: 1 ether}(1 days);
 
         uint16[8] memory solutionA;
         solutionA[0] = 2500;

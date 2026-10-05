@@ -12,17 +12,12 @@ contract PortfolioVerifier {
     int256[8] public mu;
     int256[8][8] public cov;
 
-    constructor(
-        int256[8] memory _mu,
-        int256[8][8] memory _cov
-    ) {
+    constructor(int256[8] memory _mu, int256[8][8] memory _cov) {
         mu = _mu;
         cov = _cov;
     }
 
-    function score(
-        uint16[8] calldata w
-    ) public view returns (int256) {
+    function score(uint16[8] calldata w) public view returns (int256) {
         uint256 sum = 0;
         uint256 held = 0;
 
@@ -30,10 +25,7 @@ contract PortfolioVerifier {
             uint256 wi = w[i];
 
             if (wi > 0) {
-                require(
-                    wi >= MIN_POSITION && wi <= MAX_WEIGHT,
-                    "position size"
-                );
+                require(wi >= MIN_POSITION && wi <= MAX_WEIGHT, "position size");
 
                 held++;
             }
@@ -54,10 +46,7 @@ contract PortfolioVerifier {
 
         for (uint256 i = 0; i < N; i++) {
             for (uint256 j = 0; j < N; j++) {
-                varianceRaw +=
-                    int256(uint256(w[i])) *
-                    int256(uint256(w[j])) *
-                    cov[i][j];
+                varianceRaw += int256(uint256(w[i])) * int256(uint256(w[j])) * cov[i][j];
             }
         }
 
