@@ -20,32 +20,17 @@ contract SolverArena {
     mapping(uint256 => Round) public rounds;
     mapping(address => uint256) public pendingWithdrawals;
 
-    event RoundCreated(
-        uint256 indexed roundId,
-        address indexed poster,
-        uint256 reward,
-        uint256 deadline
-    );
+    event RoundCreated(uint256 indexed roundId, address indexed poster, uint256 reward, uint256 deadline);
 
-    event SolutionSubmitted(
-        uint256 indexed roundId,
-        address indexed solver,
-        int256 score
-    );
+    event SolutionSubmitted(uint256 indexed roundId, address indexed solver, int256 score);
 
-    event RoundSettled(
-        uint256 indexed roundId,
-        address indexed winner,
-        uint256 reward
-    );
+    event RoundSettled(uint256 indexed roundId, address indexed winner, uint256 reward);
 
     constructor(PortfolioVerifier _verifier) {
         verifier = _verifier;
     }
 
-    function createRound(
-        uint256 duration
-    ) external payable returns (uint256 roundId) {
+    function createRound(uint256 duration) external payable returns (uint256 roundId) {
         require(msg.value > 0, "reward required");
         require(duration > 0, "invalid duration");
 
@@ -60,18 +45,10 @@ contract SolverArena {
             settled: false
         });
 
-        emit RoundCreated(
-            roundId,
-            msg.sender,
-            msg.value,
-            block.timestamp + duration
-        );
+        emit RoundCreated(roundId, msg.sender, msg.value, block.timestamp + duration);
     }
 
-    function submitSolution(
-        uint256 roundId,
-        uint16[8] calldata weights
-    ) external {
+    function submitSolution(uint256 roundId, uint16[8] calldata weights) external {
         Round storage round = rounds[roundId];
 
         require(round.reward > 0, "round does not exist");
@@ -85,11 +62,7 @@ contract SolverArena {
             round.bestSolver = msg.sender;
         }
 
-        emit SolutionSubmitted(
-            roundId,
-            msg.sender,
-            score
-        );
+        emit SolutionSubmitted(roundId, msg.sender, score);
     }
 
     function settleRound(uint256 roundId) external {
@@ -113,11 +86,7 @@ contract SolverArena {
             pendingWithdrawals[winner] += reward;
         }
 
-        emit RoundSettled(
-            roundId,
-            winner,
-            reward
-        );
+        emit RoundSettled(roundId, winner, reward);
     }
 
     function withdraw() external {
